@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Category } from '../model/Category';
 import { CategoryService } from '../category.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CategoryEditComponent } from '../category-edit/category-edit.component';
 
 @Component({
   selector: 'app-category-list',
@@ -23,11 +25,21 @@ export class CategoryListComponent implements OnInit{
   dataSource = new MatTableDataSource<Category>();
   displayedColumns: string[] = ['id', 'name', 'action'];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
       categories => this.dataSource.data = categories
-  );
+    );
   }
+
+  createCategory() {    
+    const dialogRef = this.dialog.open(CategoryEditComponent, {
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });    
+  }  
 }
