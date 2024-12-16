@@ -1,5 +1,9 @@
 <div class="container">
-    <h1>Crear categoría</h1>
+    @if (category.id) {
+        <h1>Modificar categoría</h1>
+    } @else {
+        <h1>Crear categoría</h1>
+    }
 
     <form>
         <mat-form-field>

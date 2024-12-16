@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Category } from '../model/Category';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryService } from '../category.service';
 
 @Component({
@@ -25,11 +25,12 @@ export class CategoryEditComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<CategoryEditComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: {category: Category},
         private categoryService: CategoryService
     ) {}
 
     ngOnInit(): void {
-        this.category = new Category();
+        this.category = this.data.category ? Object.assign({}, this.data.category) : new Category();
     }
 
     onSave() {
