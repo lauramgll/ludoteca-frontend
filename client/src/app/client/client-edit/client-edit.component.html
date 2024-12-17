@@ -1,0 +1,28 @@
+<div class="container">
+    @if (client.id) {
+        <h1>Modificar cliente</h1>
+    } @else {
+        <h1>Crear cliente</h1>
+    }
+
+    <form>
+        <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input type="text" matInput placeholder="Identificador" [(ngModel)]="client.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput [errorStateMatcher]="matcher" placeholder="Nombre de cliente" [(ngModel)]="client.name" name="name" required>
+            <!-- <mat-error>{{ errorMessage }}</mat-error> -->
+        </mat-form-field>
+        @if(errorMessage) {
+            <span>{{ errorMessage }}</span>
+        }
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>
